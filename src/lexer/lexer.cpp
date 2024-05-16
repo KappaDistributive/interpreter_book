@@ -3,9 +3,7 @@
 namespace lexer {
 using namespace token;
 
-Lexer::Lexer(std::string input) : input(input) {
-  this->read_char();
-}
+Lexer::Lexer(std::string input) : input(input) { this->read_char(); }
 
 void Lexer::read_char() {
   if (this->read_position >= this->input.size()) {

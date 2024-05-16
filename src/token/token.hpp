@@ -3,38 +3,38 @@
 #include <string>
 
 namespace token {
-  enum TokenType: int {
-    ILLEGAL,
-    ENDF,
-    INDENT,
-    INT,
-    ASSIGN,
-    PLUS,
-    COMMA,
-    SEMICOLON,
-    LPAREN,
-    RPAREN,
-    LBRACE,
-    RBRACE,
-    FUNCTION,
-    LET
-  };
+enum TokenType : int {
+  ILLEGAL,
+  ENDF,
+  INDENT,
+  INT,
+  ASSIGN,
+  PLUS,
+  COMMA,
+  SEMICOLON,
+  LPAREN,
+  RPAREN,
+  LBRACE,
+  RBRACE,
+  FUNCTION,
+  LET
+};
 
-  std::ostream& operator<<(std::ostream&, const TokenType&);
-  
-  class Token {
-    public:
-      TokenType type;
-      std::string literal;
+std::ostream &operator<<(std::ostream &, const TokenType &);
 
-      Token();
+class Token {
+public:
+  TokenType type;
+  std::string literal;
 
-      Token(TokenType, std::string);
+  Token();
 
-      void infer_type();
+  Token(TokenType, std::string);
 
-      bool operator==(const Token&) const;
+  void infer_type();
 
-      friend std::ostream& operator<<(std::ostream&, const Token&);
-  };
-}
+  bool operator==(const Token &) const;
+
+  friend std::ostream &operator<<(std::ostream &, const Token &);
+};
+} // namespace token
