@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 
 namespace token {
@@ -18,14 +19,22 @@ namespace token {
     FUNCTION,
     LET
   };
+
+  std::ostream& operator<<(std::ostream&, const TokenType&);
   
   class Token {
     public:
       TokenType type;
-      std::string literal;
+      std::u32string literal;
 
-      Token(TokenType type, std::string literal);
+      Token() = default;
 
-      bool operator==(const Token& other) const;
+      Token(TokenType, std::u32string);
+
+      void infer_type();
+
+      bool operator==(const Token&) const;
+
+      friend std::ostream& operator<<(std::ostream&, const Token&);
   };
 }
