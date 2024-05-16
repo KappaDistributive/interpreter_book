@@ -1,5 +1,4 @@
 #include "token.hpp"
-#include <locale>
 
 namespace token {
 
