@@ -25,4 +25,21 @@ TEST(Lexer, NextToken) {
   Token token = lexer.next_token();
 }
 
+/* TEST(Lexer, NextTokenAssign) {
+  std::string input{"let five = 5;"};
+
+  std::vector<Token> expected{
+      {Token(TokenType::LET, "let"), Token(TokenType::INDENT, "five"),
+       Token(TokenType::ASSIGN, "="), Token(TokenType::INT, "5"),
+       Token(TokenType::SEMICOLON, ";"), Token()}};
+
+  Lexer lexer(input);
+  EXPECT_EQ(expected.size(), input.size() + 1);
+  for (size_t index{0}; index < expected.size(); ++index) {
+    Token token = lexer.next_token();
+    EXPECT_EQ(expected[index], token);
+  }
+  Token token = lexer.next_token();
+} */
+
 } // namespace lexer
