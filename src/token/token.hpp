@@ -25,11 +25,11 @@ namespace token {
   class Token {
     public:
       TokenType type;
-      std::u32string literal;
+      std::string literal;
 
-      Token() = default;
+      Token();
 
-      Token(TokenType, std::u32string);
+      Token(TokenType, std::string);
 
       void infer_type();
 

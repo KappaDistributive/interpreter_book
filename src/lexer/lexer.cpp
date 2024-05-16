@@ -3,7 +3,7 @@
 namespace lexer {
 using namespace token;
 
-Lexer::Lexer(std::u32string input) : input(input) {
+Lexer::Lexer(std::string input) : input(input) {
   this->read_char();
 }
 
@@ -18,7 +18,7 @@ void Lexer::read_char() {
 
 Token Lexer::next_token() {
   Token token;
-  token.literal = std::u32string{this->current_char};
+  token.literal = std::string{this->current_char};
   token.infer_type();
   this->read_char();
   return token;

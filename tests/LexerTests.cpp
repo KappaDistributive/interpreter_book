@@ -3,21 +3,19 @@
 
 #include <gtest/gtest.h>
 
-#include <iostream>
-
 namespace lexer {
 using namespace token;
 
 TEST(Lexer, NextToken) {
-  std::u32string input{U"=+(){},;"};
+  std::string input{"=+(){},;"};
 
   std::vector<Token> expected{{
-      Token(TokenType::ASSIGN, U"="), Token(TokenType::PLUS, U"+"),
-      Token(TokenType::LPAREN, U"("), Token(TokenType::RPAREN, U")"),
-      Token(TokenType::LBRACE, U"{"), Token(TokenType::RBRACE, U"}"),
-      Token(TokenType::COMMA, U","),
-      Token(TokenType::SEMICOLON, U";"),
-      Token(TokenType::ENDF, std::u32string{U'\0'})
+      Token(TokenType::ASSIGN, "="), Token(TokenType::PLUS, "+"),
+      Token(TokenType::LPAREN, "("), Token(TokenType::RPAREN, ")"),
+      Token(TokenType::LBRACE, "{"), Token(TokenType::RBRACE, "}"),
+      Token(TokenType::COMMA, ","),
+      Token(TokenType::SEMICOLON, ";"),
+      Token()
   }};
 
   Lexer l(input);

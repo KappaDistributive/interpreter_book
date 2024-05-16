@@ -24,6 +24,3 @@ if (GTEST_FOUND)
   target_link_libraries(LexerTests ${GTEST_BOTH_LIBRARIES} token lexer pthread)
   GTEST_DISCOVER_TESTS(LexerTests)
 endif()
-
-# add_executable(2015_01 src/2015/day_01.cpp)
-# target_link_libraries(2015_01 input)
