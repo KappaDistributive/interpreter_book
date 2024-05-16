@@ -6,7 +6,20 @@
 namespace lexer {
 using namespace token;
 
-TEST(Lexer, NextToken) {
+TEST(Lexer, NextTokenAssign) {
+  std::string input{"="};
+  std::vector<Token> expected{{Token(TokenType::ASSIGN, "="), Token()}};
+
+  Lexer lexer(input);
+  EXPECT_EQ(expected.size(), input.size() + 1);
+  for (size_t index{0}; index < expected.size(); ++index) {
+    Token token = lexer.next_token();
+    EXPECT_EQ(expected[index], token);
+  }
+  Token token = lexer.next_token();
+}
+
+TEST(Lexer, NextTokenSimple) {
   std::string input{"=+(){},;"};
 
   std::vector<Token> expected{
@@ -23,23 +36,21 @@ TEST(Lexer, NextToken) {
     EXPECT_EQ(expected[index], token);
   }
   Token token = lexer.next_token();
+  EXPECT_EQ(Token(), token);
 }
 
-/* TEST(Lexer, NextTokenAssign) {
-  std::string input{"let five = 5;"};
+TEST(Lexer, NextTokenLet) {
+  std::string input{"let"};
 
-  std::vector<Token> expected{
-      {Token(TokenType::LET, "let"), Token(TokenType::INDENT, "five"),
-       Token(TokenType::ASSIGN, "="), Token(TokenType::INT, "5"),
-       Token(TokenType::SEMICOLON, ";"), Token()}};
+  std::vector<Token> expected{{Token(TokenType::LET, "let"), Token()}};
 
   Lexer lexer(input);
-  EXPECT_EQ(expected.size(), input.size() + 1);
+  EXPECT_EQ(expected.size(), 2);
   for (size_t index{0}; index < expected.size(); ++index) {
     Token token = lexer.next_token();
     EXPECT_EQ(expected[index], token);
   }
   Token token = lexer.next_token();
-} */
+}
 
 } // namespace lexer

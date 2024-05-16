@@ -17,5 +17,7 @@ public:
   Token next_token();
 
   void read_char();
+
+  std::string read_identifier();
 };
 } // namespace lexer

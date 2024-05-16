@@ -82,6 +82,8 @@ void Token::infer_type() {
     this->type = TokenType::COMMA;
   } else if (this->literal == ";") {
     this->type = TokenType::SEMICOLON;
+  } else if (this->literal == "let") {
+    this->type = TokenType::LET;
   } else {
     std::invalid_argument("Failed sto infer type from literal");
   }
