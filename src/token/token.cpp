@@ -1,4 +1,5 @@
 #include "token.hpp"
+#include <locale>
 
 namespace token {
 
@@ -60,13 +61,17 @@ std::ostream &operator<<(std::ostream &os, const TokenType &type) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Token &token) {
-  os << token.type << ": " << token.literal;
+  os << token.type;
+  if (token.type == TokenType::INDENT || token.type == TokenType::INT) {
+    os << '(' << token.literal << ')';
+  }
   return os;
 }
 
 void Token::infer_type() {
-  this->type = TokenType::ENDF;
-  if (this->literal == "=") {
+  if (this->literal == std::string{'\0'}) {
+    this->type = TokenType::ENDF;
+  } else if (this->literal == "=") {
     this->type = TokenType::ASSIGN;
   } else if (this->literal == "(") {
     this->type = TokenType::LPAREN;
@@ -84,8 +89,11 @@ void Token::infer_type() {
     this->type = TokenType::SEMICOLON;
   } else if (this->literal == "let") {
     this->type = TokenType::LET;
-  } else {
-    std::invalid_argument("Failed sto infer type from literal");
+  } else if (std::all_of(this->literal.cbegin(), this->literal.cend(),
+                         ::isdigit)) {
+    this->type = TokenType::INT;
+  } else if (this->literal.size() > 0 && this->literal != std::string{'\0'}) {
+    this->type = TokenType::INDENT;
   }
 }
 } // namespace token

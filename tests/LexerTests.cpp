@@ -40,14 +40,17 @@ TEST(Lexer, NextTokenSimple) {
 }
 
 TEST(Lexer, NextTokenLet) {
-  std::string input{"let"};
+  std::string input{"let five = 5;"};
 
-  std::vector<Token> expected{{Token(TokenType::LET, "let"), Token()}};
+  std::vector<Token> expected{
+      {Token(TokenType::LET, "let"), Token(TokenType::INDENT, "five"),
+       Token(TokenType::ASSIGN, "="), Token(TokenType::INT, "5"),
+       Token(TokenType::SEMICOLON, ";"), Token()}};
 
   Lexer lexer(input);
-  EXPECT_EQ(expected.size(), 2);
   for (size_t index{0}; index < expected.size(); ++index) {
     Token token = lexer.next_token();
+    std::cout << "#####: " << token << std::endl;
     EXPECT_EQ(expected[index], token);
   }
   Token token = lexer.next_token();

@@ -14,6 +14,8 @@ public:
 
   Lexer(std::string input);
 
+  void skip_whitespace();
+
   Token next_token();
 
   void read_char();

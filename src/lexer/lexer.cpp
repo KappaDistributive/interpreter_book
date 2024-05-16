@@ -20,7 +20,14 @@ void Lexer::read_char() {
   this->position = this->read_position++;
 }
 
+void Lexer::skip_whitespace() {
+  while (this->current_char == ' ') {
+    this->read_char();
+  }
+}
+
 Token Lexer::next_token() {
+  this->skip_whitespace();
   Token token;
   if (is_letter(this->current_char)) {
     token.literal = this->read_identifier();
