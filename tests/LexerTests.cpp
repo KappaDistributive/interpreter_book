@@ -106,7 +106,6 @@ TEST(Lexer, NextTokenScript) {
   Lexer lexer(input);
   for (size_t index{0}; index < expected.size(); ++index) {
     Token token = lexer.next_token();
-    std::cout << "#####: " << token << std::endl;
     EXPECT_EQ(expected[index], token);
   }
   Token token = lexer.next_token();
