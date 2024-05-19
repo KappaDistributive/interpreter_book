@@ -4,10 +4,14 @@
 
 namespace token {
 
-Token::Token() : type(TokenType::ENDF), literal(std::string{'\0'}) {};
+Token::Token() noexcept : type(TokenType::ENDF), literal(std::string{'\0'}) {};
 
-Token::Token(TokenType type, std::string literal)
+Token::Token(TokenType type, std::string literal) noexcept
     : type(type), literal(literal) {};
+
+Token::Token(std::string literal) noexcept : literal(literal) {
+  this->infer_type();
+}
 
 bool Token::operator==(const token::Token &other) const {
   return this->type == other.type && this->literal == other.literal;
@@ -96,6 +100,8 @@ void Token::infer_type() {
     this->type = TokenType::INT;
   } else if (this->literal.size() > 0 && this->literal != std::string{'\0'}) {
     this->type = TokenType::INDENT;
+  } else {
+    this->type = TokenType::ILLEGAL;
   }
 }
 } // namespace token

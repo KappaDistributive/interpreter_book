@@ -33,9 +33,11 @@ public:
   TokenType type;
   std::string literal;
 
-  Token();
+  Token() noexcept;
 
-  Token(TokenType, std::string);
+  Token(TokenType, std::string) noexcept;
+
+  Token(std::string) noexcept;
 
   void infer_type();
 
