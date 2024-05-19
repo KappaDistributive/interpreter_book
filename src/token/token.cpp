@@ -1,4 +1,6 @@
 #include "token.hpp"
+#include <algorithm>
+#include <map>
 
 namespace token {
 
@@ -86,8 +88,9 @@ void Token::infer_type() {
     this->type = TokenType::COMMA;
   } else if (this->literal == ";") {
     this->type = TokenType::SEMICOLON;
-  } else if (this->literal == "let") {
-    this->type = TokenType::LET;
+  } else if (auto search = keywords.find(this->literal);
+             search != keywords.end()) {
+    this->type = search->second;
   } else if (std::all_of(this->literal.cbegin(), this->literal.cend(),
                          ::isdigit)) {
     this->type = TokenType::INT;

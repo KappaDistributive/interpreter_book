@@ -21,5 +21,7 @@ public:
   void read_char();
 
   std::string read_identifier();
+
+  std::string read_number();
 };
 } // namespace lexer

@@ -7,6 +7,8 @@ bool is_letter(char ch) {
   return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') || ch == '_';
 }
 
+bool is_digit(char ch) { return '0' <= ch && ch <= '9'; }
+
 Lexer::Lexer(std::string input) : input(input), position(0), read_position(0) {
   this->read_char();
 }
@@ -21,7 +23,8 @@ void Lexer::read_char() {
 }
 
 void Lexer::skip_whitespace() {
-  while (this->current_char == ' ') {
+  while (this->current_char == ' ' || this->current_char == '\t' ||
+         this->current_char == '\n' || this->current_char == '\r') {
     this->read_char();
   }
 }
@@ -31,11 +34,14 @@ Token Lexer::next_token() {
   Token token;
   if (is_letter(this->current_char)) {
     token.literal = this->read_identifier();
+  } else if (is_digit(this->current_char)) {
+    token.literal = this->read_number();
   } else {
     token.literal = std::string{this->current_char};
+    this->read_char();
   }
+  std::cout << "$$$$$: " << token.literal << std::endl;
   token.infer_type();
-  this->read_char();
   return token;
 }
 
@@ -46,4 +52,13 @@ std::string Lexer::read_identifier() {
   }
   return this->input.substr(start, this->position - start);
 }
+
+std::string Lexer::read_number() {
+  auto start = this->position;
+  while (is_digit(this->current_char)) {
+    this->read_char();
+  }
+  return this->input.substr(start, this->position - start);
+}
+
 } // namespace lexer
