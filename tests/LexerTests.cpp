@@ -23,10 +23,10 @@ TEST(Lexer, NextTokenSimple) {
   std::string input{"=+(){},;"};
 
   std::vector<Token> expected{
-      {Token(TokenType::ASSIGN, "="), Token(TokenType::PLUS, "+"),
-       Token(TokenType::LPAREN, "("), Token(TokenType::RPAREN, ")"),
-       Token(TokenType::LBRACE, "{"), Token(TokenType::RBRACE, "}"),
-       Token(TokenType::COMMA, ","), Token(TokenType::SEMICOLON, ";"),
+      {Token("="), Token("+"),
+       Token("("), Token(")"),
+       Token("{"), Token("}"),
+       Token(","), Token(";"),
        Token()}};
 
   Lexer lexer(input);
@@ -43,9 +43,9 @@ TEST(Lexer, NextTokenLet) {
   std::string input{"let five = 5;"};
 
   std::vector<Token> expected{
-      {Token(TokenType::LET, "let"), Token(TokenType::INDENT, "five"),
-       Token(TokenType::ASSIGN, "="), Token(TokenType::INT, "5"),
-       Token(TokenType::SEMICOLON, ";"), Token()}};
+      {Token("let"), Token("five"),
+       Token("="), Token("5"),
+       Token(";"), Token()}};
 
   Lexer lexer(input);
   for (size_t index{0}; index < expected.size(); ++index) {
@@ -64,7 +64,8 @@ TEST(Lexer, NextTokenScript) {
                     "};\n"
                     "\n"
                     "let result = add(five, ten);"};
-
+  
+  // Use explicit constructors here to test type inference
   std::vector<Token> expected{{Token(TokenType::LET, "let"),
                                Token(TokenType::INDENT, "five"),
                                Token(TokenType::ASSIGN, "="),
