@@ -46,7 +46,8 @@ enum TokenType : int {
   ELSE,
   RETURN
 };
-static constexpr std::array<std::pair<std::string_view, TokenType>, 15>
+
+constexpr std::array<std::pair<std::string_view, TokenType>, 15>
     special_symbols{{
         {"=", TokenType::ASSIGN},
         {"+", TokenType::PLUS},
@@ -64,18 +65,17 @@ static constexpr std::array<std::pair<std::string_view, TokenType>, 15>
         {"}", TokenType::RBRACE},
     }};
 
-static constexpr std::array<std::pair<std::string_view, TokenType>, 7> keywords{
-    {
-        {"fn", TokenType::FUNCTION},
-        {"let", TokenType::LET},
-        {"true", TokenType::TRUE},
-        {"false", TokenType::FALSE},
-        {"if", TokenType::IF},
-        {"else", TokenType::ELSE},
-        {"return", TokenType::RETURN},
-    }};
+constexpr std::array<std::pair<std::string_view, TokenType>, 7> keywords{{
+    {"fn", TokenType::FUNCTION},
+    {"let", TokenType::LET},
+    {"true", TokenType::TRUE},
+    {"false", TokenType::FALSE},
+    {"if", TokenType::IF},
+    {"else", TokenType::ELSE},
+    {"return", TokenType::RETURN},
+}};
 
-static constexpr auto symbol_map = concat(special_symbols, keywords);
+constexpr auto symbol_map = concat(special_symbols, keywords);
 
 std::ostream &operator<<(std::ostream &, const TokenType &);
 
