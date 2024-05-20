@@ -78,6 +78,21 @@ std::ostream &operator<<(std::ostream &os, const TokenType &type) {
   case TokenType::LET:
     os << "LET";
     break;
+  case TokenType::TRUE:
+    os << "TRUE";
+    break;
+  case TokenType::FALSE:
+    os << "FALSE";
+    break;
+  case TokenType::IF:
+    os << "IF";
+    break;
+  case TokenType::ELSE:
+    os << "ELSE";
+    break;
+  case TokenType::RETURN:
+    os << "RETURN";
+    break;
   }
   return os;
 }
@@ -95,12 +110,12 @@ void Token::infer_type() {
   if (literal == std::string{'\0'}) {
     this->type = TokenType::ENDF;
   } else if (auto search = std::find_if(
-                 keywords.cbegin(), keywords.cend(),
+                 symbol_map.cbegin(), symbol_map.cend(),
                  [literal](
                      std::pair<std::string_view, TokenType> const &candidate) {
                    return candidate.first == literal;
                  });
-             search != keywords.end()) {
+             search != symbol_map.cend()) {
     this->type = search->second;
   } else if (std::all_of(literal.cbegin(), literal.cend(), ::isdigit)) {
     this->type = TokenType::INT;

@@ -24,27 +24,56 @@ enum TokenType : int {
   LBRACE,
   RBRACE,
   FUNCTION,
-  LET
+  LET,
+  TRUE,
+  FALSE,
+  IF,
+  ELSE,
+  RETURN
 };
+constexpr std::array<std::pair<std::string_view, TokenType>, 15>
+    special_symbols{{
+        {"=", TokenType::ASSIGN},
+        {"+", TokenType::PLUS},
+        {"-", TokenType::MINUS},
+        {"!", TokenType::BANG},
+        {"*", TokenType::ASTERISK},
+        {"/", TokenType::SLASH},
+        {"<", TokenType::LT},
+        {">", TokenType::GT},
+        {",", TokenType::COMMA},
+        {";", TokenType::SEMICOLON},
+        {"(", TokenType::LPAREN},
+        {")", TokenType::RPAREN},
+        {"{", TokenType::LBRACE},
+        {"}", TokenType::RBRACE},
+    }};
 
-constexpr std::array<std::pair<std::string_view, TokenType>, 17> keywords{{
-    {"=", TokenType::ASSIGN},
-    {"+", TokenType::PLUS},
-    {"-", TokenType::MINUS},
-    {"!", TokenType::BANG},
-    {"*", TokenType::ASTERISK},
-    {"/", TokenType::SLASH},
-    {"<", TokenType::LT},
-    {">", TokenType::GT},
-    {",", TokenType::COMMA},
-    {";", TokenType::SEMICOLON},
-    {"(", TokenType::LPAREN},
-    {")", TokenType::RPAREN},
-    {"{", TokenType::LBRACE},
-    {"}", TokenType::RBRACE},
+constexpr std::array<std::pair<std::string_view, TokenType>, 7> keywords{{
     {"fn", TokenType::FUNCTION},
     {"let", TokenType::LET},
+    {"true", TokenType::TRUE},
+    {"false", TokenType::FALSE},
+    {"if", TokenType::IF},
+    {"else", TokenType::ELSE},
+    {"return", TokenType::RETURN},
 }};
+
+template <typename T, std::size_t m, std::size_t n>
+constexpr std::array<T, m + n> concat(std::array<T, m> lhs,
+                                      std::array<T, n> rhs) {
+  std::array<T, m + n> result{};
+  std::size_t index{0};
+  for (auto &el : lhs) {
+    result[index++] = std::move(el);
+  }
+  for (auto &el : rhs) {
+    result[index++] = std::move(el);
+  }
+  return result;
+}
+
+constexpr auto symbol_map = concat(special_symbols, keywords);
 
 std::ostream &operator<<(std::ostream &, const TokenType &);
 

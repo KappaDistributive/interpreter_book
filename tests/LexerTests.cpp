@@ -133,5 +133,27 @@ TEST(Lexer, NextTokenExpanded) {
   Token token = lexer.next_token();
 }
 
+TEST(Lexer, NextTokenControlFlow) {
+  std::string input{"true false\n"
+    "if else return"};
+  std::vector<Token> expected{{
+    Token(TokenType::TRUE, "true"),
+    Token(TokenType::FALSE, "false"),
+    Token(TokenType::IF, "if"),
+    Token(TokenType::ELSE, "else"),
+    Token(TokenType::RETURN, "return"),
+    Token(),
+  }};
+
+  Lexer lexer(input);
+  EXPECT_EQ(expected.size(), 6);
+  for (size_t index{0}; index < expected.size(); ++index) {
+    Token token = lexer.next_token();
+    EXPECT_EQ(expected[index], token);
+  }
+  Token token = lexer.next_token();
+}
+
+
 
 } // namespace lexer
