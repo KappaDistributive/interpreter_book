@@ -1,6 +1,5 @@
 #include "token.hpp"
 #include <algorithm>
-#include <map>
 
 namespace token {
 
@@ -36,6 +35,24 @@ std::ostream &operator<<(std::ostream &os, const TokenType &type) {
     break;
   case TokenType::PLUS:
     os << "PLUS";
+    break;
+  case TokenType::MINUS:
+    os << "MINUS";
+    break;
+  case TokenType::BANG:
+    os << "BANG";
+    break;
+  case TokenType::SLASH:
+    os << "SLASH";
+    break;
+  case TokenType::ASTERISK:
+    os << "ASTERISK";
+    break;
+  case TokenType::LT:
+    os << "LT";
+    break;
+  case TokenType::GT:
+    os << "GT";
     break;
   case TokenType::COMMA:
     os << "COMMA";
@@ -77,22 +94,6 @@ void Token::infer_type() {
   const auto literal = this->literal;
   if (literal == std::string{'\0'}) {
     this->type = TokenType::ENDF;
-  } else if (literal == "=") {
-    this->type = TokenType::ASSIGN;
-  } else if (literal == "(") {
-    this->type = TokenType::LPAREN;
-  } else if (literal == ")") {
-    this->type = TokenType::RPAREN;
-  } else if (literal == "{") {
-    this->type = TokenType::LBRACE;
-  } else if (literal == "}") {
-    this->type = TokenType::RBRACE;
-  } else if (literal == "+") {
-    this->type = TokenType::PLUS;
-  } else if (literal == ",") {
-    this->type = TokenType::COMMA;
-  } else if (literal == ";") {
-    this->type = TokenType::SEMICOLON;
   } else if (auto search = std::find_if(
                  keywords.cbegin(), keywords.cend(),
                  [literal](

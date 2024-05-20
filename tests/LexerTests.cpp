@@ -112,4 +112,26 @@ TEST(Lexer, NextTokenScript) {
   Token token = lexer.next_token();
 }
 
+TEST(Lexer, NextTokenExpanded) {
+  std::string input{"!*<>/-"};
+  std::vector<Token> expected{{
+    Token(TokenType::BANG, "!"),
+    Token(TokenType::ASTERISK, "*"),
+    Token(TokenType::LT, "<"),
+    Token(TokenType::GT, ">"),
+    Token(TokenType::SLASH, "/"),
+    Token(TokenType::MINUS, "-"),
+    Token(),
+  }};
+
+  Lexer lexer(input);
+  EXPECT_EQ(expected.size(), input.size() + 1);
+  for (size_t index{0}; index < expected.size(); ++index) {
+    Token token = lexer.next_token();
+    EXPECT_EQ(expected[index], token);
+  }
+  Token token = lexer.next_token();
+}
+
+
 } // namespace lexer
