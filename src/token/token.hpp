@@ -1,6 +1,6 @@
 #pragma once
+#include <array>
 #include <iostream>
-#include <map>
 #include <string>
 
 namespace token {
@@ -21,9 +21,9 @@ enum TokenType : int {
   LET
 };
 
-static const std::map<std::string, TokenType> keywords{{
-    std::pair("fn", TokenType::FUNCTION),
-    std::pair("let", TokenType::LET),
+constexpr std::array<std::pair<std::string_view, TokenType>, 2> keywords{{
+    {"fn", TokenType::FUNCTION},
+    {"let", TokenType::LET},
 }};
 
 std::ostream &operator<<(std::ostream &, const TokenType &);

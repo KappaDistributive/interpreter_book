@@ -74,31 +74,36 @@ std::ostream &operator<<(std::ostream &os, const Token &token) {
 }
 
 void Token::infer_type() {
-  if (this->literal == std::string{'\0'}) {
+  const auto literal = this->literal;
+  if (literal == std::string{'\0'}) {
     this->type = TokenType::ENDF;
-  } else if (this->literal == "=") {
+  } else if (literal == "=") {
     this->type = TokenType::ASSIGN;
-  } else if (this->literal == "(") {
+  } else if (literal == "(") {
     this->type = TokenType::LPAREN;
-  } else if (this->literal == ")") {
+  } else if (literal == ")") {
     this->type = TokenType::RPAREN;
-  } else if (this->literal == "{") {
+  } else if (literal == "{") {
     this->type = TokenType::LBRACE;
-  } else if (this->literal == "}") {
+  } else if (literal == "}") {
     this->type = TokenType::RBRACE;
-  } else if (this->literal == "+") {
+  } else if (literal == "+") {
     this->type = TokenType::PLUS;
-  } else if (this->literal == ",") {
+  } else if (literal == ",") {
     this->type = TokenType::COMMA;
-  } else if (this->literal == ";") {
+  } else if (literal == ";") {
     this->type = TokenType::SEMICOLON;
-  } else if (auto search = keywords.find(this->literal);
+  } else if (auto search = std::find_if(
+                 keywords.cbegin(), keywords.cend(),
+                 [literal](
+                     std::pair<std::string_view, TokenType> const &candidate) {
+                   return candidate.first == literal;
+                 });
              search != keywords.end()) {
     this->type = search->second;
-  } else if (std::all_of(this->literal.cbegin(), this->literal.cend(),
-                         ::isdigit)) {
+  } else if (std::all_of(literal.cbegin(), literal.cend(), ::isdigit)) {
     this->type = TokenType::INT;
-  } else if (this->literal.size() > 0 && this->literal != std::string{'\0'}) {
+  } else if (literal.size() > 0 && literal != std::string{'\0'}) {
     this->type = TokenType::INDENT;
   } else {
     this->type = TokenType::ILLEGAL;
