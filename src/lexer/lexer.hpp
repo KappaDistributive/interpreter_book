@@ -20,6 +20,8 @@ public:
 
   void read_char();
 
+  char peak_char() const;
+
   std::string read_identifier();
 
   std::string read_number();

@@ -93,6 +93,12 @@ std::ostream &operator<<(std::ostream &os, const TokenType &type) {
   case TokenType::RETURN:
     os << "RETURN";
     break;
+  case TokenType::EQ:
+    os << "EQ";
+    break;
+  case TokenType::NOT_EQ:
+    os << "NOT_EQ";
+    break;
   }
   return os;
 }

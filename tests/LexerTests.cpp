@@ -16,7 +16,6 @@ TEST(Lexer, NextTokenAssign) {
     Token token = lexer.next_token();
     EXPECT_EQ(expected[index], token);
   }
-  Token token = lexer.next_token();
 }
 
 TEST(Lexer, NextTokenSimple) {
@@ -154,6 +153,65 @@ TEST(Lexer, NextTokenControlFlow) {
   Token token = lexer.next_token();
 }
 
+TEST(Lexer, Complex) {
+  std::string input{"!-/*5;\n"
+    "5 < 10 > 5;\n"
+    "if (5 < 10) {\n"
+    "    return true;\n"
+    "} else {\n"
+    "    return false;\n"
+    "}\n" 
+    "\n"
+    "10 == 10;\n"
+    "10 != 9;"
+  };
+  std::vector<Token> expected{{
+    Token(TokenType::BANG, "!"),
+    Token(TokenType::MINUS, "-"),
+    Token(TokenType::SLASH, "/"),
+    Token(TokenType::ASTERISK, "*"),
+    Token(TokenType::INT, "5"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(TokenType::INT, "5"),
+    Token(TokenType::LT, "<"),
+    Token(TokenType::INT, "10"),
+    Token(TokenType::GT, ">"),
+    Token(TokenType::INT, "5"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(TokenType::IF, "if"),
+    Token(TokenType::LPAREN, "("),
+    Token(TokenType::INT, "5"),
+    Token(TokenType::LT, "<"),
+    Token(TokenType::INT, "10"),
+    Token(TokenType::RPAREN, ")"),
+    Token(TokenType::LBRACE, "{"),
+    Token(TokenType::RETURN, "return"),
+    Token(TokenType::TRUE, "true"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(TokenType::RBRACE, "}"),
+    Token(TokenType::ELSE, "else"),
+    Token(TokenType::LBRACE, "{"),
+    Token(TokenType::RETURN, "return"),
+    Token(TokenType::FALSE, "false"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(TokenType::RBRACE, "}"),
+    Token(TokenType::INT, "10"),
+    Token(TokenType::EQ, "=="),
+    Token(TokenType::INT, "10"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(TokenType::INT, "10"),
+    Token(TokenType::NOT_EQ, "!="),
+    Token(TokenType::INT, "9"),
+    Token(TokenType::SEMICOLON, ";"),
+    Token(),
+  }};
 
+  Lexer lexer(input);
+  for (size_t index{0}; index < expected.size(); ++index) {
+    Token token = lexer.next_token();
+    EXPECT_EQ(expected[index], token);
+  }
+  Token token = lexer.next_token();
+}
 
 } // namespace lexer

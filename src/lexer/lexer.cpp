@@ -22,6 +22,13 @@ void Lexer::read_char() {
   this->position = this->read_position++;
 }
 
+char Lexer::peak_char() const {
+  if (this->read_position >= this->input.size()) {
+    return '\0';
+  }
+  return this->input[this->read_position];
+}
+
 void Lexer::skip_whitespace() {
   while (this->current_char == ' ' || this->current_char == '\t' ||
          this->current_char == '\n' || this->current_char == '\r') {
@@ -32,7 +39,15 @@ void Lexer::skip_whitespace() {
 Token Lexer::next_token() {
   this->skip_whitespace();
   Token token;
-  if (is_letter(this->current_char)) {
+  if (this->current_char == '=' && this->peak_char() == '=') {
+    token.literal = "==";
+    this->read_char();
+    this->read_char();
+  } else if (this->current_char == '!' && this->peak_char() == '=') {
+    token.literal = "!=";
+    this->read_char();
+    this->read_char();
+  } else if (is_letter(this->current_char)) {
     token.literal = this->read_identifier();
   } else if (is_digit(this->current_char)) {
     token.literal = this->read_number();

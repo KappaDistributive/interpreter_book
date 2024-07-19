@@ -44,10 +44,12 @@ enum TokenType : int {
   FALSE,
   IF,
   ELSE,
-  RETURN
+  RETURN,
+  EQ,
+  NOT_EQ
 };
 
-constexpr std::array<std::pair<std::string_view, TokenType>, 15>
+constexpr std::array<std::pair<std::string_view, TokenType>, 16>
     special_symbols{{
         {"=", TokenType::ASSIGN},
         {"+", TokenType::PLUS},
@@ -63,6 +65,8 @@ constexpr std::array<std::pair<std::string_view, TokenType>, 15>
         {")", TokenType::RPAREN},
         {"{", TokenType::LBRACE},
         {"}", TokenType::RBRACE},
+        {"==", TokenType::EQ},
+        {"!=", TokenType::NOT_EQ},
     }};
 
 constexpr std::array<std::pair<std::string_view, TokenType>, 7> keywords{{
