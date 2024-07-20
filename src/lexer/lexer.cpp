@@ -55,7 +55,6 @@ Token Lexer::next_token() {
     token.literal = std::string{this->current_char};
     this->read_char();
   }
-  std::cout << "####: " << token.literal << std::endl;
   token.infer_type();
   return token;
 }

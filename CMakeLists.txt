@@ -24,3 +24,6 @@ if (GTEST_FOUND)
   target_link_libraries(LexerTests ${GTEST_BOTH_LIBRARIES} token lexer pthread)
   GTEST_DISCOVER_TESTS(LexerTests)
 endif()
+
+add_executable(monkey src/repl/repl.cpp)
+target_link_libraries(monkey token lexer)
