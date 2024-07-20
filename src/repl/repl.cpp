@@ -1,8 +1,10 @@
 #include "repl.hpp"
+#include "../lexer/lexer.hpp"
 #include <format>
 #include <iostream>
 
-int main() {
+namespace repl {
+void start() {
   std::string line;
   while (true) {
     std::cout << std::format("{}", repl::prompt);
@@ -15,6 +17,5 @@ int main() {
       std::cout << token << std::endl;
     } while (token.type != token::TokenType::ENDF);
   }
-
-  return 0;
 }
+} // namespace repl
