@@ -104,10 +104,7 @@ std::ostream &operator<<(std::ostream &os, const TokenType &type) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Token &token) {
-  os << token.type;
-  if (token.type == TokenType::INDENT || token.type == TokenType::INT) {
-    os << '(' << token.literal << ')';
-  }
+  os << "{Type:" << token.type << " Literal:" << token.literal << '}';
   return os;
 }
 
